@@ -137,7 +137,7 @@ function App() {
         <div className="hero-grid">
           <div className="hero-text-block">
             <h1 className="reveal-text">Shreya Singh</h1>
-            <p className="reveal-text subtitle-v2">Software Developer & Full-Stack Engineer</p>
+            <p className="reveal-text subtitle-v2">BSc IT Student | Infosys Externship Alum</p>
             <div className="hero-links-v2 reveal-text">
                <a href="mailto:shreyasinghxvii@gmail.com" className="action-btn-primary">✉️ Email Me</a>
                <a href="https://linkedin.com/in/shreya-singh-935239361" target="_blank" rel="noreferrer" className="action-btn-secondary">🔗 LinkedIn</a>
