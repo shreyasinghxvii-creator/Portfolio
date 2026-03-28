@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import axios from 'axios';
 import { gsap } from 'gsap';
 import { motion, AnimatePresence } from 'framer-motion';
 import LocomotiveScroll from 'locomotive-scroll';
@@ -9,7 +8,19 @@ import './App.css';
 function App() {
   const scrollRef = useRef(null);
   const locoInstance = useRef(null); 
-  const [projects, setProjects] = useState([]);
+  
+  // Projects are now hardcoded so they show up on the live website
+  const [projects] = useState([
+    {
+      _id: "1",
+      title: "PriceScraper Pro",
+      description: "An automated price comparison tool engineered during my Infosys internship. It uses Selenium and Tesseract OCR to scrape and analyze pricing data, helping users identify the best deals across various web platforms.",
+      techStack: ["Python", "Flask", "Selenium", "Tesseract OCR"],
+      repoLink: "https://github.com/shreyasinghxvii-creator/price-comparison-web-app"
+    }
+    // Add more projects here following the same structure
+  ]);
+
   const [selectedCert, setSelectedCert] = useState(null);
   const [progress, setProgress] = useState(0);
   const [showBackToTop, setShowBackToTop] = useState(false);
@@ -23,35 +34,25 @@ function App() {
       lerp: 0.05, 
     });
 
-    // 2. Combined Scroll Listener (Progress + BackToTop + In-View Detection)
+    // 2. Scroll Listeners
     locoInstance.current.on('scroll', (args) => {
-      // Calculate scroll percentage
       const percentage = (args.scroll.y / args.limit.y) * 100;
       setProgress(percentage);
-      
-      // Toggle Back to Top button
       setShowBackToTop(percentage > 50);
 
-      // Simple "In-View" detector for reveal animations
       document.querySelectorAll('.cert-row-item, .project-card-v2').forEach(el => {
         const position = el.getBoundingClientRect();
-        // Trigger when the element is 85% from the top of the viewport
         if(position.top < window.innerHeight * 0.85) {
-           el.classList.add('is-inview');
+            el.classList.add('is-inview');
         }
       });
     });
 
-    // 3. GSAP Entrance Animations
+    // 3. Entrance Animations
     gsap.fromTo(".reveal-text", 
       { y: 100, opacity: 0 },
       { y: 0, opacity: 1, duration: 1.2, stagger: 0.15, ease: "power4.out" }
     );
-
-    // 4. Data Fetching
-    axios.get('http://localhost:5000/api/projects')
-      .then(res => setProjects(res.data))
-      .catch(err => console.error(err));
 
     return () => {
       if (locoInstance.current) locoInstance.current.destroy();
@@ -112,12 +113,10 @@ function App() {
   return (
     <div ref={scrollRef} data-scroll-container className="app-smooth-container">
       
-      {/* SCROLL PROGRESS BAR */}
       <div className="progress-container">
         <div className="progress-bar" style={{ width: `${progress}%` }}></div>
       </div>
 
-      {/* BACK TO TOP BUTTON */}
       <AnimatePresence>
         {showBackToTop && (
           <motion.button 
@@ -132,7 +131,6 @@ function App() {
         )}
       </AnimatePresence>
       
-      {/* HERO SECTION */}
       <section className="hero-section-v2" data-scroll-section>
         <div className="hero-grid">
           <div className="hero-text-block">
@@ -149,7 +147,6 @@ function App() {
         </div>
       </section>
 
-      {/* IMPACT SUMMARY */}
       <section className="impact-summary" data-scroll-section>
         <div className="summary-wrapper" data-scroll data-scroll-speed="1.2">
           <p className="impact-text">
@@ -160,7 +157,6 @@ function App() {
         </div>
       </section>
 
-      {/* CERTIFICATE VAULT */}
       <section className="vault-vertical-section" data-scroll-section>
         <h2 className="vault-label">Professional Vault</h2>
         <div className="vault-stack">
@@ -183,7 +179,6 @@ function App() {
         </div>
       </section>
 
-      {/* PROJECT SHOWCASE */}
       <section className="project-vertical-section" data-scroll-section>
         <h2 className="vault-label">Featured Projects</h2>
         <div className="project-vertical-stack">
@@ -196,13 +191,12 @@ function App() {
                 </div>
               </div>
               <p className="p-body">{project.description}</p>
-              <a href="https://github.com/shreyasinghxvii-creator/price-comparison-web-app" target="_blank" rel="noreferrer" className="p-repo">View Repository</a>
+              <a href={project.repoLink} target="_blank" rel="noreferrer" className="p-repo">View Repository</a>
             </div>
           ))}
         </div>
       </section>
 
-      {/* LIGHTBOX */}
       <AnimatePresence>
         {selectedCert && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setSelectedCert(null)} className="lightbox-v2-overlay">
@@ -218,7 +212,7 @@ function App() {
       </AnimatePresence>
 
       <footer className="simple-footer" data-scroll-section>
-        <p>© 2026 Shreya Singh • BSc IT Thakur College • MERN Architecture</p>
+        <p>© 2026 Shreya Singh • BSc IT Thakur College • Portfolio v2.0</p>
       </footer>
     </div>
   );
