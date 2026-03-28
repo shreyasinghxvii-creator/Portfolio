@@ -1,0 +1,119 @@
+/* index.css - High-Contrast Vertical Foundation */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200&display=swap');
+
+:root {
+  --black: #000000;
+  --near-black: #050505;
+  --text-white: #ffffff; 
+  --text-dim: #f5f5f7;   
+  --accent-blue: #38bdf8; 
+  --glass-effect: rgba(255, 255, 255, 0.04);
+}
+
+/* --- Smooth Scroll Setup --- */
+html.has-scroll-smooth {
+  overflow: hidden;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background-color: var(--black);
+  color: var(--text-white);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* --- Global Reset & Typography --- */
+h1, h2, h3, h4 {
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--text-white);
+}
+
+.overflow-hidden {
+  overflow: hidden;
+  display: block;
+}
+
+/* --- High-End Texture Overlay --- */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.03; 
+  z-index: 9999;
+  pointer-events: none;
+  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+}
+
+/* --- Custom Selection --- */
+::selection {
+  background-color: var(--accent-blue);
+  color: #000;
+}
+
+/* --- REVEAL UTILITIES (For GSAP/ScrollTrigger) --- */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-on-scroll.is-inview {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- Reusable Layout Utilities --- */
+.section-padding {
+  padding: 120px 10%;
+}
+
+.vault-vertical-section {
+  width: 100%;
+  background: var(--near-black);
+  position: relative;
+  z-index: 2;
+}
+
+/* --- Locomotive Scrollbar Styling --- */
+.c-scrollbar {
+  width: 6px !important;
+  background-color: rgba(255, 255, 255, 0.03) !important;
+}
+
+.c-scrollbar_thumb {
+  background-color: var(--accent-blue) !important;
+  border-radius: 20px !important;
+  opacity: 0.7;
+}
+
+/* --- Navigation & Control Globals --- */
+button, .btn {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  font-family: inherit;
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
